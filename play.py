@@ -13,10 +13,11 @@ if __name__ == '__main__':
 
     scripts.hello()
     moves = dungeon.get_playermoves(pno)
-
+    """
     while True:
         print(moves, end="  ")
-        enter = input("How?")
+        enter = input("How? ")
         if enter in moves:
             break
     print(enter)
+    """
