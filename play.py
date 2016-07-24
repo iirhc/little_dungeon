@@ -11,10 +11,10 @@ if __name__ == '__main__':
     action = {}
 
     scripts.hello()
-    dungeon.view()
+    #dungeon.view()
     while True:
         for pno in player_no:
-            #dungeon.view()
+            dungeon.view()
             moves = dungeon.get_moves()
             while True:
                 input_action = input('How? ')
@@ -25,5 +25,3 @@ if __name__ == '__main__':
         feedback = dungeon.action(action)
         if feedback == 0:
             break
-        print(feedback)
-        print('===============')

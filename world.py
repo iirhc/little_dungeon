@@ -35,14 +35,16 @@ class Dungeon:
         return ['w', 'a', 's', 'd', 'pass', 'p']
     def action(self, action):
         pno = action['player']-1
+        role = self.characters[pno]
         act = action['act']
         if act in ['pass', 'p']:
             pass
         elif act in ['w', 'a', 's', 'd']:
-            self.walk(self.characters[pno], act)
+            self.walk(role, act)
         self.show_map()
         self.monster_action()
-        return self.decision(self.characters[pno])
+        self.monster_alert(role)
+        return self.decision(role)
 
 
 # private method
@@ -95,6 +97,14 @@ class Dungeon:
                 scripts.there_is_wall()
             else:
                 role.pos[0] += 1
+    def monster_alert(self, role):
+        x = role.pos[0]
+        y = role.pos[1]
+        around = [[x+1, y], [x-1, y], [x, y+1], [x, y-1]]
+        for mon in self.monsters:
+            if mon.pos in around:
+                scripts.monster_alert()
+                print('===============')
     # monster move
     def monster_action(self):
         for mon in self.monsters:
