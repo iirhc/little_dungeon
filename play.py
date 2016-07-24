@@ -1,5 +1,6 @@
 import world
 import character
+import scripts
 
 if __name__ == '__main__':
     dungeon = world.Dungeon()
@@ -8,7 +9,8 @@ if __name__ == '__main__':
     for p in range(player_num):
         player_no.append(dungeon.add_player())
     action = {}
-    
+
+    scripts.hello()
     dungeon.view()
     while True:
         for pno in player_no:
