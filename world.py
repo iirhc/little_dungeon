@@ -40,9 +40,18 @@ class Dungeon:
             pass
         elif act in ['w', 'a', 's', 'd']:
             self.walk(self.characters[pno], act)
-            self.show_map()
+        self.show_map()
+        self.monster_action()
         return self.decision(self.characters[pno])
 
+
+# private method
+    def init_pos(self):
+        while True:
+            pos = [random.randint(0, self.size-1), random.randint(0, self.size-1)]
+            if self.meet(pos) == 'nothing':
+                break
+        return pos
     # reaction
     def decision(self, role):
         meet = self.meet(role.pos)
@@ -53,14 +62,6 @@ class Dungeon:
             scripts.meet_monster()
             return 0
         return 'nothing happens'
-
-# private method
-    def init_pos(self):
-        while True:
-            pos = [random.randint(0, self.size-1), random.randint(0, self.size-1)]
-            if self.meet(pos) == 'nothing':
-                break
-        return pos
     def meet(self, pos):
         if pos == self.exit_pos:
             return 'exit'
@@ -94,6 +95,28 @@ class Dungeon:
                 scripts.there_is_wall()
             else:
                 role.pos[0] += 1
+    # monster move
+    def monster_action(self):
+        for mon in self.monsters:
+            self.monster_walk(mon)
+    def monster_walk(self, mon):
+        moves = ['p']
+        x = mon.pos[0]
+        y = mon.pos[1]
+        if x != 0:
+            if [x-1, y] != self.exit_pos:
+                moves.append('a')
+        if x != self.size-1:
+            if [x+1, y] != self.exit_pos:
+                moves.append('d')
+        if y != 0:
+            if [x, y-1] != self.exit_pos:
+                moves.append('w')
+        if y != self.size-1:
+            if [x, y+1] != self.exit_pos:
+                moves.append('s')
+        self.walk(mon, moves[random.randint(0, len(moves)-1)])
+    # show
     def show_map(self):
         ptr = [0, 0]
         print('┌─', end="")
@@ -131,6 +154,7 @@ class Dungeon:
         print('←ａ　ｄ→')
         print('　　ｓ　　')
         print('　　↓　　　or pass')
-    # useless setting now
+    """
     def get_playermoves(self, pno):
         return self.characters[pno-1].moves
+    """
