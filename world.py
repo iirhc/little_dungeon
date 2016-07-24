@@ -21,13 +21,6 @@ class Dungeon:
         self.monsters.append(mon)
     # visualize
     def view(self):
-        print("size:", self.size)
-        print("exit:", self.exit_pos)
-        for role in self.characters:
-            print("your position:", role.pos)
-        for mon in self.monsters:
-            print("mon's position:", mon.pos)
-        print('===============')
         self.show_map()
     # do action
     def get_moves(self):
@@ -154,7 +147,3 @@ class Dungeon:
         print('←ａ　ｄ→')
         print('　　ｓ　　')
         print('　　↓　　　or pass')
-    """
-    def get_playermoves(self, pno):
-        return self.characters[pno-1].moves
-    """

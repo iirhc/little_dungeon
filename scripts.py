@@ -1,4 +1,5 @@
 def hello():
+    print(' ')
     print('...where is it?')
     print('It seems that I am in a dungeon, and I can feel something moving in the dark.')
     print('I should get out of here quickly.')
