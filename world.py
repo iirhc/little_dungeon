@@ -7,15 +7,15 @@ class Dungeon:
     # initialize
     def __init__(self, size=3):
         self.size = size
-        self.characters = []
         self.monsters = []
+        self.character = c_list.Player([-1, -1])
         self.exit_pos = [-1, -1]
         self.exit_pos = self.init_pos()
-        self.add_monster()
+        for i in range(size-2):
+            self.add_monster()
+        self.add_player()
     def add_player(self):
-        role = c_list.Player(self.init_pos())
-        self.characters.append(role)
-        return len(self.characters)
+        self.character = c_list.Player(self.init_pos())
     def add_monster(self):
         mon = c_list.Monster(self.init_pos())
         self.monsters.append(mon)
@@ -23,8 +23,7 @@ class Dungeon:
     def view(self):
         print("size:", self.size)
         print("exit:", self.exit_pos)
-        for role in self.characters:
-            print("your position:", role.pos)
+        print("your position:", self.character.pos)
         for mon in self.monsters:
             print("mon's position:", mon.pos)
         print('===============')
@@ -33,18 +32,15 @@ class Dungeon:
     def get_moves(self):
         self.show_moves()
         return ['w', 'a', 's', 'd', 'pass', 'p']
-    def action(self, action):
-        pno = action['player']-1
-        role = self.characters[pno]
-        act = action['act']
+    def action(self, act):
         if act in ['pass', 'p']:
             pass
         elif act in ['w', 'a', 's', 'd']:
-            self.walk(role, act)
+            self.walk(self.character, act)
         self.show_map()
         self.monster_action()
-        self.monster_alert(role)
-        return self.decision(role)
+        self.monster_alert()
+        return self.decision()
 
 
 # private method
@@ -55,8 +51,8 @@ class Dungeon:
                 break
         return pos
     # reaction
-    def decision(self, role):
-        meet = self.meet(role.pos)
+    def decision(self):
+        meet = self.meet(self.character.pos)
         if meet == 'exit':
             scripts.escape()
             return 0
@@ -72,9 +68,8 @@ class Dungeon:
                 if pos == mon.pos:
                     return 'monster'
             else:
-                for chara in self.characters:
-                    if pos == chara.pos:
-                        return 'player'
+                if pos == self.character.pos:
+                    return 'player'
         return 'nothing'
     def walk(self, role, act):
         if act == 'w':
@@ -97,9 +92,9 @@ class Dungeon:
                 scripts.there_is_wall()
             else:
                 role.pos[0] += 1
-    def monster_alert(self, role):
-        x = role.pos[0]
-        y = role.pos[1]
+    def monster_alert(self):
+        x = self.character.pos[0]
+        y = self.character.pos[1]
         around = [[x+1, y], [x-1, y], [x, y+1], [x, y-1]]
         for mon in self.monsters:
             if mon.pos in around:
@@ -128,43 +123,17 @@ class Dungeon:
         self.walk(mon, moves[random.randint(0, len(moves)-1)])
     # show
     def show_map(self):
-        ptr = [0, 0]
-        print('┌─', end="")
-        for x in range(self.size-1):
-            print('┬─', end="")
-        print('┐')
-        self.show_chara_in_block(ptr)
-        for y in range(self.size-1):
-            print('├─', end="")
-            for x in range(self.size-1):
-                print('┼─', end="")
-            print('┤')
-            ptr[0] = 0
-            ptr[1] += 1
-            self.show_chara_in_block(ptr)
-        print('└─', end="")
-        for x in range(self.size-1):
-            print('┴─', end="")
-        print('┘')
+        for y in range(self.size):
+            for x in range(self.size):
+                if [x, y] == self.character.pos:
+                    print('[★]', end="")
+                else:
+                    print('[  ]', end="")
+            print('')
         print('===============')
-    def show_chara_in_block(self, ptr):
-        chara_in = []
-        for role in self.characters:
-            chara_in.append(role.pos)
-        for x in range(self.size):
-            if ptr in chara_in:
-                print('│★', end="")
-            else:
-                print('│　', end="")
-            ptr[0] += 1
-        print('│')
     def show_moves(self):
-        print('　　↑　　')
-        print('　　ｗ　　')
-        print('←ａ　ｄ→')
-        print('　　ｓ　　')
-        print('　　↓　　　or pass')
-    """
-    def get_playermoves(self, pno):
-        return self.characters[pno-1].moves
-    """
+        print('\t↑')
+        print('\tw')
+        print('←a\t\td→')
+        print('\ts')
+        print('\t↓\t\tor pass')
