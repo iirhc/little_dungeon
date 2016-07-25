@@ -14,3 +14,6 @@ def escape():
 
 def meet_monster():
     print('A monster appear and catch me, and......')
+
+def monster_alert():
+    print('I can feel that there is monster around me...')
