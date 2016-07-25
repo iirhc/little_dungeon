@@ -25,7 +25,7 @@ class Dungeon:
         print("your position:", self.character.pos)
         for mon in self.monsters:
             print("mon's position:", mon.pos)
-        print('===============')
+        print('=================')
         """
         for d in self.descriptions:
             print(d)
@@ -124,7 +124,7 @@ class Dungeon:
         self.walk(mon, moves[random.randint(0, len(moves)-1)])
     # show
     def show_map(self):
-        string = '===============\n'
+        string = '=================\n'
         for y in range(self.size):
             for x in range(self.size):
                 if [x, y] == self.character.pos:
@@ -132,16 +132,16 @@ class Dungeon:
                 else:
                     string += '[  ]'
             string += '\n'
-        string += '==============='
+        string += '================='
         self.descriptions += [string]
     def show_moves(self):
-        string = '===============\n'
+        string = '=================\n'
         string += '\t↑\n'
         string += '\tw\n'
         string += '←a\t\td→\n'
         string += '\ts\n'
         string += '\t↓\t\tor pass\n'
-        string += '==============='
+        string += '================='
         self.descriptions += [string]
     def monster_alert(self):
         x = self.character.pos[0]

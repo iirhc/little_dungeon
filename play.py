@@ -15,5 +15,5 @@ if __name__ == '__main__':
         dungeon.view()
         if feedback == 0:
             break
-    print('===============')
+    print('=================')
     print('Thank you for playing!')
