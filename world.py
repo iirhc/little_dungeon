@@ -19,14 +19,6 @@ class Dungeon:
         self.show_map()
     # visualize
     def view(self):
-        """
-        print("size:", self.size)
-        print("exit:", self.exit_pos)
-        print("your position:", self.character.pos)
-        for mon in self.monsters:
-            print("mon's position:", mon.pos)
-        print('=================')
-        """
         for d in self.descriptions:
             print(d)
         self.descriptions = []
