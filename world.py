@@ -36,7 +36,9 @@ class Dungeon:
         self.show_moves()
         return ['w', 'a', 's', 'd', 'pass', 'p']
     def action(self, act):
-        if act in ['pass', 'p']:
+        if act in ['g']:
+            return 0
+        elif act in ['pass', 'p']:
             pass
         elif act in ['w', 'a', 's', 'd']:
             self.walk(self.character, act)
