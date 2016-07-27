@@ -26,9 +26,11 @@ class Dungeon:
     def get_moves(self):
         self.monster_alert()
         self.show_moves()
-        return ['w', 'a', 's', 'd', 'pass', 'p']
+        return ['w', 'a', 's', 'd', 'pass', 'p', 'g']
     def action(self, act):
-        if act in ['pass', 'p']:
+        if act in ['g']:
+            return 0
+        elif act in ['pass', 'p']:
             pass
         elif act in ['w', 'a', 's', 'd']:
             self.walk(self.character, act)
@@ -115,6 +117,14 @@ class Dungeon:
                 moves.append('s')
         self.walk(mon, moves[random.randint(0, len(moves)-1)])
     # show
+    def print_data(self):
+        print('/////////////////')
+        print("size:", self.size)
+        print("exit:", self.exit_pos)
+        print("your position:", self.character.pos)
+        for mon in self.monsters:
+            print("mon's position:", mon.pos)
+        print('/////////////////')
     def show_map(self):
         string = '=================\n'
         for y in range(self.size):

@@ -1,8 +1,19 @@
 import world
 import character
+import numbers
 
 if __name__ == '__main__':
-    dungeon = world.Dungeon(size=3)
+    while True:
+        input_size = input('choose dungeon level: ')
+        try:
+            size = int(input_size)+2
+            if size>=3:
+                break
+            else:
+                print('Input should be > 0')
+        except ValueError:
+            print('Input is not integer.')
+    dungeon = world.Dungeon(size=size)
     dungeon.view()
     while True:
         moves = dungeon.get_moves()
