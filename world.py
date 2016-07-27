@@ -19,14 +19,7 @@ class Dungeon:
         self.show_map()
     # visualize
     def view(self):
-        """
-        print("size:", self.size)
-        print("exit:", self.exit_pos)
-        print("your position:", self.character.pos)
-        for mon in self.monsters:
-            print("mon's position:", mon.pos)
-        print('=================')
-        """
+        #self.print_data()
         for d in self.descriptions:
             print(d)
         self.descriptions = []
@@ -125,6 +118,14 @@ class Dungeon:
                 moves.append('s')
         self.walk(mon, moves[random.randint(0, len(moves)-1)])
     # show
+    def print_data(self):
+        print('/////////////////')
+        print("size:", self.size)
+        print("exit:", self.exit_pos)
+        print("your position:", self.character.pos)
+        for mon in self.monsters:
+            print("mon's position:", mon.pos)
+        print('/////////////////')
     def show_map(self):
         string = '=================\n'
         for y in range(self.size):
