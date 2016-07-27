@@ -27,7 +27,7 @@ class Dungeon:
     def get_moves(self):
         self.monster_alert()
         self.show_moves()
-        return ['w', 'a', 's', 'd', 'pass', 'p']
+        return ['w', 'a', 's', 'd', 'pass', 'p', 'g']
     def action(self, act):
         if act in ['g']:
             return 0
