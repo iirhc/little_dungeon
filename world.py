@@ -130,9 +130,9 @@ class Dungeon:
         for y in range(self.size):
             for x in range(self.size):
                 if [x, y] == self.character.pos:
-                    string += '[★]'
+                    string += '[OAO]'
                 else:
-                    string += '[  ]'
+                    string += '[   ]'
             string += '\n'
         string += '================='
         self.descriptions += [string]
